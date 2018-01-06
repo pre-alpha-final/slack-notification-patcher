@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SlackNotificationPatcher.Infrastructure.Implementation
 {
@@ -7,7 +9,14 @@ namespace SlackNotificationPatcher.Infrastructure.Implementation
     {
         public IEnumerable<FileInfo> FindAll()
         {
-            throw new NotImplementedException();
+            var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var executables = Directory.EnumerateFiles($"{appDataFolder}\\slack", "slack.exe", SearchOption.AllDirectories)
+                .Where(e => e.Contains("app-"))
+                .ToList();
+            return executables.Select(e => new FileInfo
+            {
+                Path = e,
+            });
         }
     }
 }

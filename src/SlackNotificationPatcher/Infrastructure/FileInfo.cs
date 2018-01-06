@@ -2,6 +2,6 @@
 {
     class FileInfo
     {
-        string Version { get; set; }
+        public string Path { get; set; }
     }
 }
