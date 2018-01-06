@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SlackNotificationPatcher.Infrastructure;
+using SlackNotificationPatcher.Infrastructure.Implementation;
+using System;
 
 namespace SlackNotificationPatcher
 {
@@ -6,7 +8,11 @@ namespace SlackNotificationPatcher
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Patching slack notifications\n");
+
+            INotificationFixer notificationFixer = new NotificationFixer();
+            notificationFixer.FixAll();
+
             Console.ReadKey(true);
         }
     }
