@@ -10,6 +10,8 @@ namespace SlackNotificationPatcher.Infrastructure
 	 * Modified https://stackoverflow.com/a/28607981
 	 * as the original would break if data was on the border
 	 * between two 1024 blocks 
+	 * 
+	 * also adding Contains(...)
 	 */
 	public static class BinaryUtility
 	{
@@ -69,6 +71,32 @@ namespace SlackNotificationPatcher.Infrastructure
 			{
 				foreach (byte d in from.Take(match)) { yield return d; }
 			}
+		}
+
+		public static bool Contains(BinaryReader reader, IEnumerable<byte> sequence)
+		{
+			int match = 0;
+			var input = GetByteStream(reader);
+			var sequenceEnumerator = sequence.GetEnumerator();
+			sequenceEnumerator.MoveNext();
+
+			foreach (var data in input)
+			{
+				if (data == sequenceEnumerator.Current)
+				{
+					match++;
+					if (sequenceEnumerator.MoveNext()) { continue; }
+					return true;
+				}
+				if (0 != match)
+				{
+					match = 0;
+					sequenceEnumerator.Reset();
+					sequenceEnumerator.MoveNext();
+				}
+			}
+
+			return false;
 		}
 	}
 }
