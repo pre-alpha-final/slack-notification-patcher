@@ -2,29 +2,24 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using SlackNotificationPatcher.Extensions;
 
 namespace SlackNotificationPatcher.Infrastructure
 {
 	/*
 	 * Modified https://stackoverflow.com/a/28607981
-	 * as the original would break if data was on the border
-	 * between two 1024 blocks 
-	 * 
-	 * also adding Contains(...)
+	 * adding Contains(...)
 	 */
 	public static class BinaryUtility
 	{
 		public static IEnumerable<byte> GetByteStream(BinaryReader reader)
 		{
-			//const int bufferSize = 1024;
-			//byte[] buffer;
-			//do
-			//{
-			//	buffer = reader.ReadBytes(bufferSize);
-			//	foreach (var d in buffer) { yield return d; }
-			//} while (bufferSize == buffer.Length);
-			return reader.ReadAllBytes();
+			const int bufferSize = 4096;
+			byte[] buffer;
+			do
+			{
+				buffer = reader.ReadBytes(bufferSize);
+				foreach (var d in buffer) { yield return d; }
+			} while (bufferSize == buffer.Length);
 		}
 
 		public static void Replace(BinaryReader reader, BinaryWriter writer, IEnumerable<Tuple<byte[], byte[]>> searchAndReplace)
