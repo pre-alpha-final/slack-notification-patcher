@@ -13,6 +13,7 @@ namespace SlackNotificationPatcher
 			INotificationFixer notificationFixer = new NotificationFixer();
 			notificationFixer.FixAll();
 
+			Console.WriteLine("\nDone");
 			Console.ReadKey(true);
 		}
 	}

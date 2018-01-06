@@ -7,7 +7,12 @@ namespace SlackNotificationPatcher.Infrastructure.Implementation
 		public void FixAll()
 		{
 			ISlackFinder slackFinder = new SlackFinder();
-			var slackList = slackFinder.FindAll().ToList();
+			var fileInfoList = slackFinder.FindAll().ToList();
+			foreach (var fileInfo in fileInfoList)
+			{
+				IPatcher patcher = new NotificationPatcher();
+				patcher.Patch(fileInfo);
+			}
 		}
 	}
 }
