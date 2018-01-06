@@ -13,10 +13,7 @@ namespace SlackNotificationPatcher.Infrastructure.Implementation
 			var executables = Directory.EnumerateFiles($"{appDataFolder}\\slack", "slack.exe", SearchOption.AllDirectories)
 				.Where(e => e.Contains("app-"))
 				.ToList();
-			return executables.Select(e => new FileInfo
-			{
-				Path = e,
-			});
+			return executables.Select(e => new FileInfo(e));
 		}
 	}
 }
