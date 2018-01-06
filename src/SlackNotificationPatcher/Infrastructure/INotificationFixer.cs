@@ -1,7 +1,7 @@
 ﻿namespace SlackNotificationPatcher.Infrastructure
 {
-    interface INotificationFixer
-    {
-        void FixAll();
-    }
+	interface INotificationFixer
+	{
+		void FixAll();
+	}
 }

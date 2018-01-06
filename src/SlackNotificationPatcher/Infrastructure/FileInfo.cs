@@ -1,7 +1,7 @@
 ﻿namespace SlackNotificationPatcher.Infrastructure
 {
-    class FileInfo
-    {
-        public string Path { get; set; }
-    }
+	class FileInfo
+	{
+		public string Path { get; set; }
+	}
 }

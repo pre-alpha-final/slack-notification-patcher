@@ -4,16 +4,16 @@ using System;
 
 namespace SlackNotificationPatcher
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Patching slack notifications\n");
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			Console.WriteLine("Patching slack notifications\n");
 
-            INotificationFixer notificationFixer = new NotificationFixer();
-            notificationFixer.FixAll();
+			INotificationFixer notificationFixer = new NotificationFixer();
+			notificationFixer.FixAll();
 
-            Console.ReadKey(true);
-        }
-    }
+			Console.ReadKey(true);
+		}
+	}
 }

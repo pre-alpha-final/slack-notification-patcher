@@ -2,8 +2,8 @@
 
 namespace SlackNotificationPatcher.Infrastructure
 {
-    interface ISlackFinder
-    {
-        IEnumerable<FileInfo> FindAll();
-    }
+	interface ISlackFinder
+	{
+		IEnumerable<FileInfo> FindAll();
+	}
 }
