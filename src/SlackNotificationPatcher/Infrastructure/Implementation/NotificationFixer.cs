@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SlackNotificationPatcher.Infrastructure.Implementation
 {
@@ -8,7 +9,7 @@ namespace SlackNotificationPatcher.Infrastructure.Implementation
 	{
 		public void FixAll()
 		{
-			ISlackFinder slackFinder = new SlackFinder();
+			var slackFinder = Program.Container.GetService<ISlackFinder>();
 			var fileInfoList = slackFinder.FindAll().ToList();
 
 			var tasks = new List<Task>();
@@ -16,7 +17,7 @@ namespace SlackNotificationPatcher.Infrastructure.Implementation
 			{
 				tasks.Add(Task.Factory.StartNew(() =>
 				{
-					IPatcher patcher = new NotificationPatcher();
+					var patcher = Program.Container.GetService<IPatcher>();
 					patcher.Patch(fileInfo);
 				}));
 			}

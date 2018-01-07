@@ -1,20 +1,34 @@
-﻿using SlackNotificationPatcher.Infrastructure;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SlackNotificationPatcher.Infrastructure;
 using SlackNotificationPatcher.Infrastructure.Implementation;
 using System;
 
 namespace SlackNotificationPatcher
 {
-	class Program
+	public class Program
 	{
+		public static IServiceProvider Container { get; private set; }
+
 		static void Main(string[] args)
 		{
 			Console.WriteLine("Patching slack notifications\n");
 
-			INotificationFixer notificationFixer = new NotificationFixer();
+			RegisterServices();
+
+			var notificationFixer = Container.GetService<INotificationFixer>();
 			notificationFixer.FixAll();
 
 			Console.WriteLine("\nDone");
 			Console.ReadKey(true);
+		}
+
+		private static void RegisterServices()
+		{
+			var services = new ServiceCollection();
+			services.AddSingleton<INotificationFixer, NotificationFixer>();
+			services.AddTransient<ISlackFinder, SlackFinder>();
+			services.AddTransient<IPatcher, NotificationPatcher>();
+			Container = services.BuildServiceProvider();
 		}
 	}
 }
